@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Document</title>
+    <style>
+        #container{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        #navBar{
+            display: flex;
+            justify-content: space-evenly;
+            box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+           
+        }
+        #navBar>a{
+            text-decoration: none;
+            color: teal;
+        }
+        #contactList>div{
+            margin-top: 50px;
+            display: flex;
+            justify-content: center;
+           
+        }
+        thead>tr>td{
+            background-color: teal;
+            color: white;
+
+        }
+        th,td{
+            padding: 10px;
+            border: 1px solid grey;            
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <div id="navBar">
+            <a href="./contactAdd.html"><h1>Home</h1></a>
+            <a href="./contactList.html"><h1>Contact List</h1></a>
+            <a href="./Favourites.html"><h1>Favourites</h1></a>
+        </div>
+        <div id="contactList">
+            <div>
+                <table>
+                    <thead>
+                        <tr><td>Contact Name</td> <td>Mobile Number</td> <td>Type</td> <td>Favourites</td> </tr>
+                    </thead>
+                    <tbody id="tablebody">
+    
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        </div>
+    </div>    
+</body>
+<script>
+    window.addEventListener("load",contactlistPreparation);
+    var contactList;
+    if(localStorage.getItem("contactList")===null){
+        alert("please add the contacts");        
+    }else{
+        contactList=JSON.parse(localStorage.getItem("contactList"));        
+    }
+    
+    var favList=JSON.parse(localStorage.getItem("favList")) || [];
+
+
+    function contactlistPreparation(){
+        document.querySelector("#tablebody").innerHTML='';
+        contactList.forEach(details => {
+            var row=document.createElement("tr");
+            
+            var td1=document.createElement("td");
+            td1.innerText=details.name;
+
+            var td2=document.createElement("td");
+            td2.innerText=details.number;
+
+            var td3=document.createElement("td");
+            td3.innerText=details.type;
+
+            var td4=document.createElement("td");
+            td4.innerText="Favourites";
+            td4.style.color="red";
+            td4.style.cursor="pointer";
+
+            td4.addEventListener("click",function(){
+                favList.push(details);
+                localStorage.setItem("favList",JSON.stringify(favList));
+                alert("Contact added to favourite list");
+            })
+
+            row.append(td1,td2,td3,td4);
+            document.querySelector("#tablebody").append(row)
+        });
+    }
+</script>
+</html>

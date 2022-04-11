@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Document</title>
+    <style>
+        #container{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        #navBar{
+            display: flex;
+            justify-content: space-evenly;
+            box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+           
+        }
+        #navBar>a{
+            text-decoration: none;
+            color: teal;
+        }
+        #favouriteList{
+            display: flex;
+            justify-content: center;
+            margin-top: 50px;
+        }
+        thead>tr>td{
+            background-color: teal;
+            color: white;
+
+        }
+        th,td{
+            padding: 10px;
+            border: 1px solid grey;            
+        }        
+    </style>
+</head>
+<body>
+    <div id="container">
+        <div id="navBar">
+            <a href="./contactAdd.html"><h1>Home</h1></a>
+            <a href="./contactList.html"><h1>Contact List</h1></a>
+            <a href="./Favourites.html"><h1>Favourites</h1></a>
+        </div>
+        <div id="favouriteList">
+            <div>
+                <table>
+                    <thead>
+                        <tr><td>Contact Name</td> <td>Mobile Number</td> <td>Type</td> </tr>
+                    </thead>
+                    <tbody id="tablebody">
+    
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>    
+</body>
+<script>
+    var contactList=JSON.parse(localStorage.getItem("favList")) || [];
+
+    window.addEventListener("load",contactlistPreparation);
+console.log()
+    function contactlistPreparation(){
+        document.querySelector("#tablebody").innerHTML='';
+        contactList.forEach(details => {
+            var row=document.createElement("tr");
+            
+            var td1=document.createElement("td");
+            td1.innerText=details.name;
+
+            var td2=document.createElement("td");
+            td2.innerText=details.number;
+
+            var td3=document.createElement("td");
+            td3.innerText=details.type;
+
+            row.append(td1,td2,td3);
+            document.querySelector("#tablebody").append(row)
+        });
+
+    }
+</script>
+</html>

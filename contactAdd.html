@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Document</title>
+    <style>
+        #container{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        #navBar{
+            display: flex;
+            justify-content: space-evenly;
+            box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+            margin-bottom: 50px;           
+        }
+        #navBar>a{
+            text-decoration: none;
+            color: teal;
+        }
+        #contactAdding{
+            display: flex;
+            justify-content: center;
+        }
+        #contactAdding>div{
+            box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;            
+            width: 500px;
+            height: 400px;
+            text-align: center;
+        }
+        form{
+            box-sizing: border-box;
+            margin: 20px 80px 10px 80px;
+            display: flex;
+            flex-direction: column;           
+        }
+        form>input{
+            margin: 10px;
+        }
+        form>select{
+            margin: 10px; 
+
+        }
+        #submitButton{
+            color: white;
+            background-color: black;
+            font-size: x-large;
+            border-radius: 20px;
+        }
+
+       
+     </style>
+     <!-- <link rel="stylesheet" href="./index.css" /> -->
+</head>
+<body>
+    <div id="container">
+        <div id="navBar">
+            <a href="./contactAdd.html"><h1>Home</h1></a>
+            <a href="./contactList.html"><h1>Contact List</h1></a>
+            <a href="./Favourites.html"><h1>Favourites</h1></a>
+        </div>
+        <div id="contactAdding">
+            <div>
+                <h1>Enter Your Contact Details</h1>
+            <form action="" id="detailsForm">
+                <input type="text" placeholder="Enter Contact Name" id="contactName">
+                <input type="Number" placeholder="Enter Mobile Number (without country code )" id="contactNumber">
+                <select name="" id="typeOfContact">
+                    <option value="select">Select Type</option>
+                    <option value="family"> Family</option>
+                    <option value="friends">Friends</option>
+                    <option value="others">Others</option>
+                </select>
+                <input type="submit" value="Submit" id="submitButton">
+            </form>
+            </div>
+        </div>
+    </div>        
+</body>
+<script>
+    document.querySelector("#detailsForm").addEventListener("submit",contactDetailsAdding);
+    var contactArr;
+    
+    if(localStorage.getItem("contactList")===null){
+        contactArr=[];
+    }else{
+        contactArr=JSON.parse(localStorage.getItem("contactList"));
+    }
+
+
+    function contactDetailsAdding(){
+        event.preventDefault();
+        var contactDetailsObj={ name:"",
+                                number:"",
+                                type:""};
+        var contactName=document.querySelector("#contactName").value;
+        var contactNumber=document.querySelector("#contactNumber").value;
+        var typeOfContact=document.querySelector("#typeOfContact").value;
+
+        if(contactName==""){
+            alert("please enter name")
+        }else if(contactNumber.length!=10){
+            alert("Please enter valid Number")
+        }else if(typeOfContact=="select"){
+            alert("please select the type of contact")
+        }else{
+            contactDetailsObj.name=contactName;
+            contactDetailsObj.number=contactNumber;
+            contactDetailsObj.type=typeOfContact; 
+            contactArr.push(contactDetailsObj);
+            console.log(contactDetailsObj);
+            console.log(contactArr);
+            localStorage.setItem("contactList",JSON.stringify(contactArr))           
+        }   
+    }
+</script>
+</html>
